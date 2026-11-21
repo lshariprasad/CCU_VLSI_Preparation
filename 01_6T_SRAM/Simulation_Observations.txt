@@ -1,0 +1,34 @@
+
+PROJECT: 6T SRAM Cell Design and Simulation
+
+Software: LTspice
+Circuit: 6-Transistor SRAM Cell
+Simulation: Transient Analysis
+Supply Voltage: 1.8 V
+Simulation Duration: 16 ns
+
+OBSERVATIONS:
+
+1. WRITE OPERATION:
+The wordline is enabled.
+BL is driven LOW and BLB is driven HIGH.
+The SRAM storage nodes settle to complementary logic states.
+
+2. HOLD OPERATION:
+The wordline is disabled.
+The storage nodes retain their previous logic states.
+
+3. PRECHARGE OPERATION:
+Both bitlines are charged HIGH before the read operation.
+
+4. READ OPERATION:
+The wordline is enabled again.
+BL discharges while BLB remains HIGH.
+This demonstrates the expected read behaviour for the stored data.
+
+SIMULATION MODEL:
+Generic Level-1 NMOS and PMOS models.
+
+LIMITATION:
+This is an educational simulation and does not use an actual
+16-nm FinFET technology model.

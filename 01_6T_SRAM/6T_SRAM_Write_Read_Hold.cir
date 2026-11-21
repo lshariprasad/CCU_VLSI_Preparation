@@ -1,0 +1,62 @@
+
+* ==================================================
+* 6T SRAM CELL - WRITE, HOLD AND READ SIMULATION
+* Educational generic MOSFET model
+* ==================================================
+
+VDD VDD 0 1.8
+
+* Word line
+VWL WL 0 PWL(0 0 0.9n 0 1n 1.8 4.9n 1.8 5n 0 9n 0 9.1n 1.8 12.9n 1.8 13n 0 16n 0)
+
+* Write enable
+VWE WE 0 PWL(0 0 0.9n 0 1n 1.8 4.9n 1.8 5n 0 16n 0)
+
+* Bitline precharge control
+VPRE PRE 0 PWL(0 0 6n 0 6.1n 1.8 8.9n 1.8 9n 0 16n 0)
+
+* Write data sources
+VBLDRV BLSRC 0 0
+VBLBDRV BLBSRC 0 1.8
+
+* Write switches
+SWRITE1 BLSRC BL WE 0 SWMOD
+SWRITE2 BLBSRC BLB WE 0 SWMOD
+
+* Precharge switches
+SPRE1 VDD BL PRE 0 SWMOD
+SPRE2 VDD BLB PRE 0 SWMOD
+
+* Bitline capacitance
+CBL BL 0 20f
+CBLB BLB 0 20f
+
+* Six MOSFET SRAM cell
+* Pull-down NMOS
+M1 Q QB 0 0 NM W=2u L=0.18u
+M3 QB Q 0 0 NM W=2u L=0.18u
+
+* Pull-up PMOS
+M2 Q QB VDD VDD PM W=1u L=0.18u
+M4 QB Q VDD VDD PM W=1u L=0.18u
+
+* Access NMOS
+M5 Q WL BL 0 NM W=2u L=0.18u
+M6 QB WL BLB 0 NM W=2u L=0.18u
+
+* Generic MOSFET models
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* Switch model
+.model SWMOD SW(Ron=10 Roff=1G Vt=0.9 Vh=0.05)
+
+* Initial conditions
+.ic V(Q)=1.8 V(QB)=0 V(BL)=1.8 V(BLB)=1.8
+
+* Transient analysis
+.tran 0 16n 0 5p uic
+
+.save V(Q) V(QB) V(BL) V(BLB) V(WL) V(WE) V(PRE)
+
+.end
