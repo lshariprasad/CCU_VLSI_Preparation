@@ -1,0 +1,35 @@
+
+* ==========================================================
+* EXPERIMENT 2C
+* TRANSISTOR-LEVEL SRAM BUTTERFLY CURVE
+* Hold SNM preparation
+* ==========================================================
+
+* Supply voltage
+VDD VDD 0 1.8
+
+* Input voltage for DC sweep
+VIN IN 0 0
+
+* CMOS inverter - NMOS
+MN OUT IN 0 0 NM W=2u L=0.18u
+
+* CMOS inverter - PMOS
+MP OUT IN VDD VDD PM W=4u L=0.18u
+
+* Generic Level-1 MOSFET models
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* Mirrored inverter characteristic
+* This mirrors the transistor-level VTC about
+* the centre of the 1.8V supply range.
+BMIR MIR 0 V=1.8-V(OUT)
+
+* DC sweep
+.dc VIN 0 1.8 1m
+
+* Save simulation data
+.save V(IN) V(OUT) V(MIR)
+
+.end

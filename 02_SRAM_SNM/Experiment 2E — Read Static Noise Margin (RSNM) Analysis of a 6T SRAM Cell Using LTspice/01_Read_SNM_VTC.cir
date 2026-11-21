@@ -1,0 +1,68 @@
+
+* ============================================================
+* EXPERIMENT 2E
+* READ STATIC NOISE MARGIN (RSNM) ANALYSIS OF 6T SRAM
+* LTspice - DC SWEEP ANALYSIS
+* ============================================================
+
+* Supply voltage
+.param VDDVAL=1.8
+VDD VDD 0 {VDDVAL}
+
+* READ MODE CONDITIONS
+* Word line HIGH
+VWL WL 0 {VDDVAL}
+
+* Both bitlines precharged HIGH
+VBL BL 0 {VDDVAL}
+VBLB BLB 0 {VDDVAL}
+
+* DC sweep source connected to storage node Q
+VSW Q 0 0
+
+* ------------------------------------------------------------
+* CROSS-COUPLED INVERTER 1
+* Output: QB
+* Input : Q
+* ------------------------------------------------------------
+
+M1 QB Q 0 0 NM W=2u L=0.18u
+M2 QB Q VDD VDD PM W=1u L=0.18u
+
+* ------------------------------------------------------------
+* CROSS-COUPLED INVERTER 2
+* Output: Q
+* Input : QB
+* ------------------------------------------------------------
+
+M3 Q QB 0 0 NM W=2u L=0.18u
+M4 Q QB VDD VDD PM W=1u L=0.18u
+
+* ------------------------------------------------------------
+* ACCESS TRANSISTORS
+* Both ON because WL = 1.8V
+* ------------------------------------------------------------
+
+M5 Q WL BL 0 NM W=2u L=0.18u
+M6 QB WL BLB 0 NM W=2u L=0.18u
+
+* ------------------------------------------------------------
+* GENERIC LEVEL-1 MOSFET MODELS
+* Same models as Experiment 2D
+* ------------------------------------------------------------
+
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* ------------------------------------------------------------
+* DC SWEEP
+* Input sweep: 0V to 1.8V
+* Step size: 1mV
+* ------------------------------------------------------------
+
+.dc VSW 0 {VDDVAL} 1m
+
+* Save important nodes
+.save V(Q) V(QB) V(WL) V(BL) V(BLB)
+
+.end

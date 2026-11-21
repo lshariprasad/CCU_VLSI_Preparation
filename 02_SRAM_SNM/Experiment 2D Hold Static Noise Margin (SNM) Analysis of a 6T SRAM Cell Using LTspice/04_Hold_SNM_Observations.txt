@@ -1,0 +1,66 @@
+
+EXPERIMENT 2D
+
+TITLE:
+Hold Static Noise Margin Analysis of a 6T SRAM Cell
+Using LTspice
+
+SOFTWARE:
+LTspice
+
+SUPPLY VOLTAGE:
+1.8 V
+
+MOSFET MODEL:
+Generic Level-1 NMOS and PMOS
+
+TRANSISTOR DIMENSIONS:
+NMOS: W = 2 um, L = 0.18 um
+PMOS: W = 1 um, L = 0.18 um
+
+OPERATING MODE:
+Hold Mode
+
+WORD LINE:
+WL = 0 V
+
+BITLINES:
+BL = 1.8 V
+BLB = 1.8 V
+
+ANALYSIS:
+DC Sweep
+
+INPUT SWEEP:
+0 V to 1.8 V
+
+STEP SIZE:
+1 mV
+
+OBJECTIVE:
+To obtain the inverter voltage-transfer characteristic
+and construct the SRAM butterfly curve for hold-SNM
+analysis.
+
+OBSERVATIONS:
+
+1. The inverter output decreases as the input voltage
+   increases.
+
+2. The access transistors remain OFF during hold mode.
+
+3. The second characteristic is obtained by swapping
+   the input and output axes.
+
+4. The two characteristics form the SRAM butterfly curve.
+
+5. The largest inscribed square is used to determine
+   the hold static noise margin.
+
+RESULT:
+Hold SNM analysis was performed using generic
+MOSFET models.
+
+LIMITATION:
+The simulation uses generic Level-1 MOSFET models.
+It does not represent an actual 16-nm FinFET process.

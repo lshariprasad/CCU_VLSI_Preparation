@@ -1,0 +1,27 @@
+
+* ==========================================
+* EXPERIMENT 2A - CMOS INVERTER VTC
+* ==========================================
+
+* Supply voltage
+VDD VDD 0 1.8
+
+* Input voltage (will be swept)
+VIN IN 0 0
+
+* NMOS transistor
+MN OUT IN 0 0 NM W=2u L=0.18u
+
+* PMOS transistor
+MP OUT IN VDD VDD PM W=1u L=0.18u
+
+* Generic MOSFET models
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* DC voltage sweep
+.dc VIN 0 1.8 1m
+
+.save V(IN) V(OUT)
+
+.end

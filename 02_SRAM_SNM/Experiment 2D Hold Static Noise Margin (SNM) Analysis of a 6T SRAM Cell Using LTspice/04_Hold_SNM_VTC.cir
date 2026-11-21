@@ -1,0 +1,44 @@
+
+* ==========================================================
+* EXPERIMENT 2D - 6T SRAM HOLD SNM ANALYSIS
+* Decoupled inverter VTC extraction
+* Generic Level-1 MOSFET model
+* ==========================================================
+
+.param VDDVAL=1.8
+
+* Supply
+VDD VDD 0 {VDDVAL}
+
+* Swept storage-node input
+VSW QIN 0 0
+
+* Hold-mode controls
+VWL WL 0 0
+VBL BL 0 {VDDVAL}
+VBLB BLB 0 {VDDVAL}
+
+* Inverter under test
+* Input = QIN
+* Output = QB
+
+M1 QB QIN 0 0 NM W=2u L=0.18u
+M2 QB QIN VDD VDD PM W=1u L=0.18u
+
+* Access transistor for the swept storage node
+M5 QIN WL BL 0 NM W=2u L=0.18u
+
+* Access transistor for the output storage node
+M6 QB WL BLB 0 NM W=2u L=0.18u
+
+* Generic educational MOSFET models
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* DC sweep
+.dc VSW 0 {VDDVAL} 1m
+
+* Save required voltages
+.save V(QIN) V(QB) V(WL) V(BL) V(BLB)
+
+.end

@@ -1,0 +1,40 @@
+
+* =====================================================
+* EXPERIMENT 2D - COMPLETE 6T SRAM HOLD VERIFICATION
+* Supply voltage: 1.8V
+* Generic Level-1 MOSFET models
+* =====================================================
+
+* Power supply
+VDD VDD 0 1.8
+
+* Hold-mode signals
+VWL WL 0 0
+VBL BL 0 1.8
+VBLB BLB 0 1.8
+
+* Inverter 1: output Q
+M1 Q QB 0 0 NM W=2u L=0.18u
+M2 Q QB VDD VDD PM W=1u L=0.18u
+
+* Inverter 2: output QB
+M3 QB Q 0 0 NM W=2u L=0.18u
+M4 QB Q VDD VDD PM W=1u L=0.18u
+
+* Access transistors
+M5 Q WL BL 0 NM W=2u L=0.18u
+M6 QB WL BLB 0 NM W=2u L=0.18u
+
+* MOSFET models
+.model NM NMOS (LEVEL=1 VTO=0.45 KP=200u LAMBDA=0.02)
+.model PM PMOS (LEVEL=1 VTO=-0.45 KP=100u LAMBDA=0.02)
+
+* Initial stored state
+.ic V(Q)=1.8 V(QB)=0
+
+* Transient analysis
+.tran 0 20n 0 10p
+
+.save V(Q) V(QB) V(WL) V(BL) V(BLB)
+
+.end

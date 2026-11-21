@@ -1,0 +1,21 @@
+EXPERIMENT 2B
+Complementary Inverter Characteristics
+
+Software: LTspice
+Supply Voltage: 1.8 V
+Analysis: DC Sweep
+
+OBSERVATIONS:
+
+1. Generated two complementary voltage characteristics.
+2. Green curve represents the falling characteristic.
+3. Blue curve represents the rising characteristic.
+4. Both curves intersect around 0.75 V.
+
+RESULT:
+Complementary inverter characteristics were
+successfully simulated using LTspice.
+
+NOTE:
+This is a behavioural demonstration, not an
+actual SRAM butterfly curve or SNM measurement.

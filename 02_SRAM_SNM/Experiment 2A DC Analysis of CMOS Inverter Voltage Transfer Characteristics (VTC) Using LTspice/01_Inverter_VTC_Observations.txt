@@ -1,0 +1,23 @@
+
+EXPERIMENT: CMOS INVERTER VTC
+
+Software: LTspice
+VDD: 1.8 V
+NMOS: Generic Level-1
+PMOS: Generic Level-1
+Analysis: DC Sweep
+Input sweep: 0 V to 1.8 V
+Step: 1 mV
+
+OBSERVATIONS:
+
+1. At low input voltage, output voltage is HIGH.
+2. At high input voltage, output voltage is LOW.
+3. A sharp switching transition occurs around 0.75 V.
+
+RESULT:
+The CMOS inverter voltage transfer characteristic
+was successfully obtained using LTspice.
+
+LIMITATION:
+Generic MOSFET models were used, not 16-nm FinFET models.

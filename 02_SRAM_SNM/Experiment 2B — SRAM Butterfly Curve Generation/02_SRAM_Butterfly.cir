@@ -1,0 +1,21 @@
+
+* =====================================================
+* EXPERIMENT 2B - SRAM BUTTERFLY CURVE
+* Idealized complementary inverter characteristics
+* =====================================================
+
+* DC sweep input
+VSW X 0 0
+
+* First inverter characteristic (falling curve)
+B1 Y1 0 V=1.8/(1+exp((V(X)-0.75)/0.04))
+
+* Complementary characteristic (rising curve)
+B2 Y2 0 V=1.8/(1+exp((0.75-V(X))/0.04))
+
+* Sweep input from 0V to 1.8V
+.dc VSW 0 1.8 1m
+
+.save V(X) V(Y1) V(Y2)
+
+.end

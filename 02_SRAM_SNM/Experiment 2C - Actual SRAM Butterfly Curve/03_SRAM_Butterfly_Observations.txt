@@ -1,0 +1,39 @@
+
+EXPERIMENT 2C
+
+TITLE:
+Transistor-Level CMOS Inverter Butterfly Curve
+for SRAM Hold-SNM Preparation
+
+SOFTWARE: LTspice
+
+SUPPLY VOLTAGE: 1.8 V
+
+TRANSISTORS:
+NMOS - Generic Level-1
+PMOS - Generic Level-1
+
+ANALYSIS: DC Sweep
+INPUT RANGE: 0 V to 1.8 V
+STEP SIZE: 1 mV
+
+OBJECTIVE:
+To obtain the transistor-level CMOS inverter
+transfer characteristic and its mirrored curve.
+
+OBSERVATIONS:
+
+1. The inverter output decreases as input increases.
+2. The mirrored characteristic increases as input increases.
+3. Both characteristics intersect near the
+   inverter switching point.
+4. The two curves form a butterfly-shaped plot.
+
+RESULT:
+The transistor-level inverter characteristic and
+its mirrored characteristic were simulated in LTspice.
+
+LIMITATION:
+Generic Level-1 MOSFET models were used.
+This is not an actual 16-nm FinFET simulation
+or a direct measurement of complete 6T SRAM SNM.
