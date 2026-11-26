@@ -255,27 +255,19 @@ The separately extracted inverter VTC contains 1801 sweep points at a 1 mV step.
 
 # 13. Repository Structure
 
-```text
-Experiment_2D_Hold_SNM/
-│
-├── README.md
-│
-├── 04_Hold_SNM_Butterfly.png
-├── 04_Hold_SNM_Observations.txt
-├── 04_Hold_SNM_VTC.cir
-├── 04_Hold_SNM_VTC.log
-├── 04_Hold_SNM_VTC.txt
-│
-├── 05_6T_SRAM_Hold_Verification.cir
-├── 05_6T_SRAM_Hold_Verification.log
-├── 05_6T_SRAM_Hold_Verification.png
-├── 05_6T_SRAM_Hold_New_Verification.png
-└── 05_6T_SRAM_Hold_Verification.op.raw
-```
+The Experiment 2D files are stored in:
 
-LTspice `.raw` and `.op.raw` files are generated simulation files. They may be retained locally but are not required in the GitHub repository when the netlists, exported data, logs and plots are included.
+`02_SRAM_SNM/Experiment 2D Hold Static Noise Margin (SNM) Analysis of a 6T SRAM Cell Using LTspice/`
 
----
+Key files in that directory:
+
+- `04_Hold_SNM_VTC.cir` - decoupled inverter VTC extraction setup.
+- `04_Hold_SNM_VTC.log` and `04_Hold_SNM_VTC.raw` - associated LTspice simulation artifacts.
+- `04_Hold_SNM_Butterfly.png` - the image referenced above as the inverter VTC.
+- `04_Hold_SNM_Observations.txt` - scope and limitations of the preliminary estimate.
+- `05_6T_SRAM_Hold_Verification.cir` - complete 6T hold-mode transient netlist.
+- `05_6T_SRAM_Hold_Verification.log` and `.raw` - associated LTspice artifacts.
+- `05_6T_SRAM_Hold_Verification.png` and `05_6T_SRAM_Hold_New_Verification.png` - exported plots.
 
 # 14. Future Work
 
