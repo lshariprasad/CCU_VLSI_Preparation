@@ -266,7 +266,7 @@ Key files in that directory:
 - `04_Hold_SNM_Butterfly.png` - the image referenced above as the inverter VTC.
 - `04_Hold_SNM_Observations.txt` - scope and limitations of the preliminary estimate.
 - `05_6T_SRAM_Hold_Verification.cir` - complete 6T hold-mode transient netlist.
-- `05_6T_SRAM_Hold_Verification.log` and `.raw` - associated LTspice artifacts.
+- `05_6T_SRAM_Hold_Verification.log`, `.raw` and `.op.raw` - associated LTspice artifacts.
 - `05_6T_SRAM_Hold_Verification.png` and `05_6T_SRAM_Hold_New_Verification.png` - exported plots.
 
 # 14. Future Work
