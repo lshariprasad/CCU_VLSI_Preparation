@@ -1,66 +1,31 @@
 # EXPERIMENT 2E
 
 ## TITLE
-Read Static Noise Margin (RSNM) Analysis of a 6T SRAM Cell Using LTspice
+Read-Mode Stability Study of a 6T SRAM Cell Using LTspice
 
 ## SOFTWARE
 LTspice 26.0.1
 
-## SUPPLY VOLTAGE
-1.8 V
-
-## MOSFET MODEL
-Generic Level-1 NMOS and PMOS
-
-## TRANSISTOR DIMENSIONS
+## SUPPLY AND DEVICE MODEL
+- Supply voltage: 1.8 V
+- Generic Level-1 NMOS and PMOS models
 - NMOS: W = 2 µm, L = 0.18 µm
 - PMOS: W = 1 µm, L = 0.18 µm
 
-## OPERATING MODE
-Read Mode
+## CURRENT FILE STATUS
+A read-mode netlist, simulation log, raw data file, plot and this result template are present in the repository.
 
-## WORD LINE
-WL = 1.8 V
+## ANALYSIS SETUP IN THE NETLIST
+- Word line is set HIGH.
+- Both bitlines are precharged HIGH.
+- A DC source sweeps node Q from 0 V to 1.8 V in 1 mV steps.
+- The circuit includes the two cross-coupled inverter pair and two access transistors.
 
-## BITLINES
-BL = 1.8 V
-BLB = 1.8 V
+## RESULT STATUS
+**In progress - no verified numerical RSNM value is recorded.** The calculated-result field is intentionally left blank. The extraction method and exported butterfly data must be checked before an RSNM value is reported.
 
-## ANALYSIS
-DC Sweep
-
-## INPUT SWEEP
-0 V to 1.8 V
-
-## STEP SIZE
-1 mV
-
-## OBJECTIVE
-To analyze the read stability of a 6T SRAM cell and extract the Read Static Noise Margin (RSNM) using the butterfly curve method.
-
-## PROCEDURE
-1. Construct the complete 6T SRAM circuit using two cross-coupled CMOS inverters and two access transistors.
-2. Set the supply voltage to 1.8 V.
-3. Precharge both bitlines to 1.8 V.
-4. Set the word line to 1.8 V to activate both access transistors.
-5. Apply a DC voltage sweep from 0 V to 1.8 V at node Q.
-6. Observe the corresponding output voltage at node QB.
-7. Export the DC sweep data.
-8. Construct the butterfly curve by reflecting the inverter VTC across the diagonal.
-9. Determine RSNM using the largest inscribed square in the smaller butterfly lobe.
-
-## OBSERVATIONS
-1. Both access transistors are enabled during read mode.
-2. Both bitlines are maintained at the supply voltage.
-3. The inverter transfer characteristic is affected by the read access transistor.
-4. The read disturbance changes the butterfly curve.
-5. The largest inscribed square is used to determine RSNM.
-
-## CALCULATED RESULT
-RSNM = __________ V
-
-## RESULT
-Read Static Noise Margin analysis of a 6T SRAM cell was performed using LTspice. The RSNM was determined using the butterfly curve method.
-
-## LIMITATION
-The simulation uses generic Level-1 MOSFET models. It does not represent an actual 16-nm FinFET process or a foundry-calibrated transistor model.
+## LIMITATIONS
+- The models are generic educational Level-1 models, not foundry-calibrated devices.
+- This is not a 16-nm FinFET simulation.
+- The presence of a netlist, log or plot alone does not establish a valid RSNM result.
+- Do not claim a numerical RSNM or WSNM until the complete methodology and extracted result have been independently reviewed.
