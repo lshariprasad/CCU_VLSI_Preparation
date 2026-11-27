@@ -1,66 +1,42 @@
-
 EXPERIMENT 2D
 
 TITLE:
-Hold Static Noise Margin Analysis of a 6T SRAM Cell
-Using LTspice
+6T SRAM Hold-Mode Simulation and Preliminary Mirrored-Inverter VTC Estimate
 
 SOFTWARE:
-LTspice
+LTspice 26.0.1
 
 SUPPLY VOLTAGE:
 1.8 V
 
 MOSFET MODEL:
-Generic Level-1 NMOS and PMOS
+Generic educational Level-1 NMOS and PMOS models (not a foundry-calibrated process model)
 
 TRANSISTOR DIMENSIONS:
 NMOS: W = 2 um, L = 0.18 um
 PMOS: W = 1 um, L = 0.18 um
 
 OPERATING MODE:
-Hold Mode
+Hold mode for the complete 6T transient netlist
 
-WORD LINE:
-WL = 0 V
+NETLIST SCOPE:
+04_Hold_SNM_VTC.cir is a decoupled inverter VTC extraction setup; it is not the complete cross-coupled 6T cell.
+05_6T_SRAM_Hold_Verification.cir contains the complete two-inverter, two-access-transistor 6T cell and a 20 ns transient-analysis setup.
 
-BITLINES:
-BL = 1.8 V
-BLB = 1.8 V
+VTC SWEEP:
+0 V to 1.8 V in 1 mV steps (1801 points)
 
-ANALYSIS:
-DC Sweep
+METHOD:
+The second inverter characteristic was approximated by exchanging the X and Y coordinates of the extracted single-inverter VTC. This assumes identical inverter transfer characteristics.
 
-INPUT SWEEP:
-0 V to 1.8 V
+RECORDED VALUE:
+0.6442 V - preliminary mirrored-inverter VTC estimate only.
 
-STEP SIZE:
-1 mV
+IMPORTANT RESULT LIMITATION:
+The 0.6442 V value is NOT a validated cell-level 6T SRAM Hold Static Noise Margin (HSNM). A full-cell hold butterfly curve and a documented largest-square extraction are still required.
 
-OBJECTIVE:
-To obtain the inverter voltage-transfer characteristic
-and construct the SRAM butterfly curve for hold-SNM
-analysis.
+PROCESS LIMITATION:
+These generic Level-1 models do not represent an actual 16-nm FinFET process and are not calibrated to a fabrication PDK.
 
-OBSERVATIONS:
-
-1. The inverter output decreases as the input voltage
-   increases.
-
-2. The access transistors remain OFF during hold mode.
-
-3. The second characteristic is obtained by swapping
-   the input and output axes.
-
-4. The two characteristics form the SRAM butterfly curve.
-
-5. The largest inscribed square is used to determine
-   the hold static noise margin.
-
-RESULT:
-Hold SNM analysis was performed using generic
-MOSFET models.
-
-LIMITATION:
-The simulation uses generic Level-1 MOSFET models.
-It does not represent an actual 16-nm FinFET process.
+VALIDATION NOTE:
+The LTspice log for the complete 6T transient netlist records successful operating-point convergence. Inspect the transient waveform and rerun the simulation locally before reporting exact node voltages.

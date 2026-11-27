@@ -1,37 +1,35 @@
-# Experiment 2D – Hold Static Noise Margin (HSNM) Analysis of a 6T SRAM Cell Using LTspice
+# Experiment 2D – 6T SRAM Hold-Mode Simulation and Preliminary VTC-Based SNM Estimate Using LTspice
 
 ![LTspice](https://img.shields.io/badge/Simulation-LTspice-blue)
 ![VLSI](https://img.shields.io/badge/Domain-VLSI-green)
 ![Circuit](https://img.shields.io/badge/Circuit-6T%20SRAM-orange)
-![Analysis](https://img.shields.io/badge/Analysis-Hold%20SNM-purple)
+![Analysis](https://img.shields.io/badge/Analysis-Hold%20Mode-purple)
 
 ## 1. Project Overview
 
-This project focuses on the simulation and analysis of a **6-Transistor (6T) Static Random Access Memory (SRAM) cell** using LTspice.
+This experiment documents a 6T SRAM hold-mode simulation and an educational estimate derived from a mirrored single-inverter voltage-transfer characteristic (VTC).
 
-The main objective is to study the stability of an SRAM cell during hold operation and determine its Hold Static Noise Margin (HSNM) using inverter Voltage Transfer Characteristics (VTC) and the butterfly curve method.
+The repository contains a complete 6T SRAM hold-transient netlist. Separately, the value previously recorded as 0.6442 V comes from mirroring one inverter VTC under an identical-inverter assumption. **It is not a validated cell-level 6T SRAM Hold Static Noise Margin (HSNM) result.**
 
-The experiment includes:
+All simulations use generic educational Level-1 MOSFET models. They are not foundry-calibrated models and do not represent a 16-nm FinFET process.
 
-- CMOS inverter DC voltage transfer characteristic analysis.
-- 6T SRAM transistor-level circuit implementation.
-- Hold-mode operation verification.
-- Butterfly curve construction using mirrored inverter characteristics.
-- Hold Static Noise Margin calculation.
-- Analysis using generic Level-1 NMOS and PMOS models.
+The experiment currently includes:
 
----
+- CMOS inverter DC VTC extraction.
+- A complete 6T SRAM hold-mode transient netlist.
+- A mirrored single-inverter VTC approximation for learning the butterfly-curve concept.
+- A clearly labelled preliminary estimate, with full-cell HSNM extraction still requiring validation.
 
 ## 2. Objectives
 
 1. Understand the working principle of a 6T SRAM cell.
 2. Design and simulate a CMOS inverter using LTspice.
 3. Obtain the inverter Voltage Transfer Characteristic (VTC).
-4. Implement a complete 6T SRAM cell.
-5. Verify the stored logic state during hold operation.
-6. Construct the SRAM butterfly curve.
-7. Calculate the Hold Static Noise Margin (HSNM).
-8. Understand the effect of transistor characteristics on SRAM stability.
+4. Implement a complete 6T SRAM hold-mode circuit.
+5. Set up transient analysis for the stored state during hold operation.
+6. Explore how a mirrored inverter VTC forms an educational butterfly-like approximation.
+7. Distinguish a VTC-based estimate from a validated full-cell HSNM extraction.
+8. Identify the additional methodology and evidence needed for cell-level stability results.
 
 ---
 
@@ -130,7 +128,7 @@ The LTspice netlist is included in this repository.
 1. The inverter output remains HIGH for a LOW input voltage.
 2. As the input voltage increases, the output voltage decreases.
 3. A sharp transition occurs near the inverter switching region.
-4. The inverter VTC is used to construct the butterfly curve.
+4. A mirrored copy of the inverter VTC can illustrate the butterfly-curve concept, but it is only an approximation and is not a full-cell 6T SRAM extraction.
 
 ### VTC Result
 
@@ -140,9 +138,9 @@ The LTspice netlist is included in this repository.
 
 ---
 
-# 7. Experiment 2D - Part 2: Complete 6T SRAM Hold Verification
+# 7. Experiment 2D - Part 2: Complete 6T SRAM Hold-Mode Transient Setup
 
-A complete 6T SRAM cell was implemented using two cross-coupled CMOS inverters and two NMOS access transistors.
+The file `05_6T_SRAM_Hold_Verification.cir` contains two cross-coupled CMOS inverters and two NMOS access transistors, forming a complete 6T SRAM cell.
 
 ### Hold Mode Conditions
 
@@ -155,9 +153,7 @@ A complete 6T SRAM cell was implemented using two cross-coupled CMOS inverters a
 | Initial Q | 1.8 V |
 | Initial QB | 0 V |
 
-When WL is LOW, both access transistors are OFF.
-
-The cross-coupled inverter pair retains the previously stored logic state.
+When WL is LOW, both access transistors are intended to be OFF.
 
 ### Initial Conditions
 
@@ -171,26 +167,15 @@ The cross-coupled inverter pair retains the previously stored logic state.
 .tran 0 20n 0 10p
 ```
 
-### Expected Hold State
+### Simulation Artifact
 
-| Storage Node | Expected Voltage | Logic State |
-|---|---:|---|
-| Q | Approximately 1.8 V | Logic 1 |
-| QB | Approximately 0 V | Logic 0 |
+![6T SRAM Hold Verification](02_SRAM_SNM/Experiment%202D%20Hold%20Static%20Noise%20Margin%20(SNM)%20Analysis%20of%20a%206T%20SRAM%20Cell%20Using%20LTspice/05_6T_SRAM_Hold_Verification.png)
 
-### Simulation Result
+The netlist and simulation artifacts are committed. The LTspice log records successful operating-point convergence. Inspect the transient waveform and rerun the netlist locally before quoting exact node voltages or treating the plot as an independently validated result.
 
-![6T SRAM Hold Verification](05_6T_SRAM_Hold_Verification.png)
+# 8. Mirrored-Inverter VTC Construction (Educational Approximation)
 
-The transient simulation verifies that the SRAM cell maintains its complementary storage-node voltages during the 20 ns hold interval.
-
----
-
-# 8. Experiment 2D - Part 3: Butterfly Curve Construction
-
-The SRAM butterfly curve is constructed using the inverter Voltage Transfer Characteristics.
-
-For two identical cross-coupled inverters, the second inverter characteristic can be represented by reflecting the first inverter VTC across the diagonal line:
+For two identical cross-coupled inverters, the second inverter characteristic can be approximated by reflecting the first inverter VTC across the diagonal:
 
 \[
 Y=X
@@ -206,7 +191,7 @@ X=V(QIN)
 Y=V(QB)
 \]
 
-### Second Inverter Characteristic
+### Mirrored Characteristic
 
 \[
 X=V(QB)
@@ -216,146 +201,94 @@ X=V(QB)
 Y=V(QIN)
 \]
 
-The two characteristics form the butterfly plot.
+**Artifact status:** The existing `04_Hold_SNM_Butterfly.png` is referenced above as the inverter VTC. A separate full-cell 6T SRAM hold butterfly plot is not documented as an exported artifact in this experiment folder.
 
-### Butterfly Curve
+**Important limitation:** Mirroring one inverter VTC assumes identical inverter transfer characteristics. It does not replace extracting both sides of the butterfly curve from the complete 6T cell under the correct hold conditions. Any value calculated from this approximation must be labelled an estimate, not a validated 6T SRAM HSNM.
 
-**Artifact status:** A separate exported butterfly-curve image is not currently present in the tracked Experiment 2D folder. The README therefore does not link to a missing plot. The method described here is the mirrored single-inverter VTC approximation.
+# 9. Preliminary Mirrored-VTC Estimate (Not Validated 6T SRAM HSNM)
 
-**Methodological assumption:** The second inverter VTC is assumed to be identical to the extracted first inverter VTC. Its characteristic is therefore generated by exchanging the X and Y coordinates.
-
----
-
-# 9. Hold Static Noise Margin Calculation
-
-The Hold Static Noise Margin represents the maximum DC noise voltage that can be tolerated by an SRAM cell while preserving its stored data under hold conditions.
-
-The SNM is extracted using the largest-square method on the butterfly curve.
-
-### Calculated Result
+The following value is retained as a preliminary educational estimate from the extracted single-inverter VTC and its mirrored characteristic. It must not be reported as a validated cell-level 6T SRAM HSNM.
 
 | Parameter | Value |
 |---|---:|
 | Supply Voltage | 1.8 V |
 | VTC Data Points | 1801 |
 | Input Sweep Step | 1 mV |
-| Calculated Hold SNM | 0.6442 V |
-| Rounded Hold SNM | **0.644 V** |
+| Mirrored-inverter VTC estimate | 0.6442 V |
 
-### Calculation Method
+### Method and assumptions
 
-The maximum-square extraction is performed in rotated coordinates.
+- The source VTC is extracted using a DC sweep.
+- The second characteristic is generated by exchanging the X and Y coordinates of the same VTC.
+- This assumes identical cross-coupled inverter characteristics.
+- The estimate is based on generic Level-1 educational MOSFET models.
 
-The second inverter characteristic is obtained by mirroring the original VTC.
-
-The largest square side length is then calculated from the butterfly characteristics.
-
-### Result
-
-\[
-\boxed{HSNM \approx 0.6442\ V}
-\]
-
-This result is based on the extracted inverter VTC and the assumption of identical cross-coupled inverters.
-
-It is a simulation result using generic Level-1 MOSFET models.
-
----
+**Status:** The full-cell 6T SRAM HSNM has not been validated by a butterfly curve extracted from the complete cell. Do not describe 0.6442 V as a measured, foundry-calibrated, or validated SRAM HSNM result.
 
 # 10. Observations
 
-1. A 6T SRAM cell consists of six MOSFET transistors.
+1. A conventional 6T SRAM cell contains six MOSFETs.
 2. Two cross-coupled CMOS inverters provide bistable data storage.
-3. Both access transistors remain OFF during hold operation.
-4. The word line is maintained at 0 V during the hold condition.
-5. Both bitlines are maintained at 1.8 V.
-6. The transient simulation verifies the stored logic state.
-7. The inverter VTC is extracted using a DC sweep.
-8. The butterfly curve is constructed using the original and mirrored inverter characteristics.
-9. The largest inscribed square is used to calculate the Hold Static Noise Margin.
+3. Both access transistors are intended to remain OFF when WL is 0 V.
+4. The complete 6T hold-mode transient netlist is present in the repository.
+5. The inverter VTC is extracted separately using a DC sweep.
+6. A mirrored single-inverter VTC can illustrate the butterfly-curve concept.
+7. The mirrored-VTC estimate depends on the identical-inverter assumption.
+8. A full-cell butterfly extraction and validated largest-square result are still required before reporting cell-level HSNM.
 
----
+# 11. Project Results and Validation Status
 
-# 11. Project Results
+The repository contains a complete 6T SRAM hold-mode netlist and a 20 ns transient-analysis setup. Its LTspice log records successful operating-point convergence. The transient waveform should be inspected locally before reporting exact storage-node values.
 
-The 6T SRAM hold-mode circuit was successfully simulated using LTspice.
+The separately extracted inverter VTC contains 1801 sweep points at a 1 mV step. A value of 0.6442 V was previously recorded from a mirrored-single-inverter VTC calculation.
 
-The stored logic state was verified through transient analysis:
-
-- Q remains approximately 1.8 V.
-- QB remains approximately 0 V.
-- Both storage nodes maintain their complementary logic states during the hold interval.
-
-The inverter VTC was extracted using DC sweep analysis.
-
-The butterfly curve was constructed using the mirrored-inverter VTC assumption.
-
-The calculated Hold Static Noise Margin is approximately:
-
-\[
-\boxed{HSNM = 0.6442\ V}
-\]
-
----
+**That 0.6442 V value is a preliminary VTC-based estimate, not a validated 6T SRAM HSNM result.** Full-cell HSNM remains to be extracted and checked using the complete SRAM cell's hold-mode butterfly characteristics and a documented largest-square procedure.
 
 # 12. Limitations
 
 - The simulation uses generic Level-1 NMOS and PMOS models.
 - The MOSFET models are not calibrated to a specific semiconductor fabrication process.
 - The simulation does not represent an actual 16-nm FinFET technology.
-- The butterfly curve assumes identical cross-coupled inverter characteristics.
-- The calculated HSNM is based on the mirrored single-inverter VTC approximation.
-- The results should not be interpreted as silicon measurement data.
-
----
+- The 0.6442 V value comes from a mirrored single-inverter VTC approximation.
+- A full-cell 6T SRAM hold butterfly curve and validated HSNM extraction are not yet documented.
+- The available files do not establish silicon measurement data or foundry-calibrated results.
 
 # 13. Repository Structure
 
-```text
-Experiment_2D_Hold_SNM/
-│
-├── README.md
-│
-├── 04_Hold_SNM_Butterfly.png
-├── 04_Hold_SNM_Observations.txt
-├── 04_Hold_SNM_VTC.cir
-├── 04_Hold_SNM_VTC.log
-├── 04_Hold_SNM_VTC.txt
-│
-├── 05_6T_SRAM_Hold_Verification.cir
-├── 05_6T_SRAM_Hold_Verification.log
-├── 05_6T_SRAM_Hold_Verification.png
-├── 05_6T_SRAM_Hold_New_Verification.png
-└── 05_6T_SRAM_Hold_Verification.op.raw
-```
+The Experiment 2D files are stored in:
 
-LTspice `.raw` and `.op.raw` files are generated simulation files. They may be retained locally but are not required in the GitHub repository when the netlists, exported data, logs and plots are included.
+`02_SRAM_SNM/Experiment 2D Hold Static Noise Margin (SNM) Analysis of a 6T SRAM Cell Using LTspice/`
 
----
+Key files in that directory:
+
+- `04_Hold_SNM_VTC.cir` - decoupled inverter VTC extraction setup.
+- `04_Hold_SNM_VTC.log` and `04_Hold_SNM_VTC.raw` - associated LTspice simulation artifacts.
+- `04_Hold_SNM_Butterfly.png` - the image referenced above as the inverter VTC.
+- `04_Hold_SNM_Observations.txt` - scope and limitations of the preliminary estimate.
+- `05_6T_SRAM_Hold_Verification.cir` - complete 6T hold-mode transient netlist.
+- `05_6T_SRAM_Hold_Verification.log`, `.raw` and `.op.raw` - associated LTspice artifacts.
+- `05_6T_SRAM_Hold_Verification.png` and `05_6T_SRAM_Hold_New_Verification.png` - exported plots.
 
 # 14. Future Work
 
-The next stage of this project is to study the stability of a 6T SRAM cell under read conditions.
+### Experiment 2E - Read Static Noise Margin (RSNM)
 
-Planned experiments:
+The repository contains an initial read-mode netlist and a results template. The numerical RSNM field is blank, and the extraction methodology has not been independently validated. Treat this experiment as in progress; do not report an RSNM value yet.
 
-- Experiment 2E: Read Static Noise Margin (RSNM) Analysis.
+### Planned experiments
+
 - Experiment 2F: Write Static Noise Margin (WSNM) Analysis.
 - Experiment 2G: SRAM Read and Write Operation Verification.
 - Experiment 2H: Transistor Sizing and SNM Comparison.
 
----
-
 ## Conclusion
 
-This experiment provides a transistor-level introduction to 6T SRAM operation and stability analysis using LTspice.
+This experiment provides an educational introduction to CMOS inverter VTC extraction and 6T SRAM hold-mode simulation using LTspice.
 
-The work covers CMOS inverter VTC extraction, SRAM hold-state verification, butterfly curve construction and Hold Static Noise Margin calculation.
-
-It establishes a foundation for further exploration of SRAM design, memory stability, transistor sizing and low-power VLSI circuit design.
+A mirrored-single-inverter VTC estimate is retained with explicit assumptions, but it is not presented as a validated full-cell HSNM result. Full-cell hold-SNM extraction and the read/write stability studies remain work to be completed and verified.
 
 ---
 
 **Project Area:** VLSI Design | CMOS Circuits | SRAM Design | LTspice Simulation
 
-**Experiment:** 2D - Hold Static Noise Margin Analysis of a 6T SRAM Cell
+**Experiment:** 2D - 6T SRAM Hold-Mode Simulation and Preliminary VTC-Based Estimate
